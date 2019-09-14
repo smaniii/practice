@@ -1,3 +1,5 @@
 QuickMaths.iml
 .idea/*
 out/*
+.gradle/*
+build/*
