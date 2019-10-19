@@ -1,5 +1,7 @@
 package com.seth.MikeQuestions;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,8 +11,8 @@ public class KClosestPointsToOrigin {
 
     public int[][] kClosest(int[][] points, int K) {
         List<Point> pointList = new ArrayList<>();
-        for (int i = 0; i < points.length; i++) {
-            Point point = new Point(points[i][0], points[i][1]);
+        for (int[] ints : points) {
+            Point point = new Point(ints[0], ints[1]);
             pointList.add(point);
         }
         pointList.sort(Comparator.reverseOrder());
@@ -28,7 +30,7 @@ public class KClosestPointsToOrigin {
         return solution;
     }
 
-    private class Point implements Comparable, Comparator {
+    private class Point implements Comparable<Object>, Comparator {
         private int x;
         private int y;
         private double distance;
@@ -40,7 +42,7 @@ public class KClosestPointsToOrigin {
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(@NotNull Object o) {
             return Double.compare(((Point) o).distance, this.distance);
         }
 
