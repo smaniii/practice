@@ -1,5 +1,6 @@
 package com.seth.leetCode
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class BinaryTreePathsTest {
@@ -16,7 +17,8 @@ class BinaryTreePathsTest {
         treeNode.left = treeNode2;
         treeNode.right = treeNode3
 
-        println(binaryTreePaths.binaryTreePaths(treeNode))
+        val expectedList = listOf<String>("1->2->5", "1->3")
+        assertEquals(expectedList, binaryTreePaths.binaryTreePaths(treeNode))
     }
 
 }

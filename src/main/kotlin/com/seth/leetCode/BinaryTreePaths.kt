@@ -1,8 +1,8 @@
 package com.seth.leetCode
 
 object BinaryTreePaths {
-    var paths = mutableListOf<String>()
-    var currentPath = ""
+    private var paths = mutableListOf<String>()
+    private var currentPath = ""
     fun binaryTreePaths(root: TreeNode?): List<String> {
         if(root == null) return paths
         if(root.left == null && root.right == null) {
