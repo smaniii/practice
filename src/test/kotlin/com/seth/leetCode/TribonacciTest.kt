@@ -9,6 +9,6 @@ internal class TribonacciTest {
     val trib = Tribonacci
     @Test
     fun `n is 4`() {
-        assertEquals(4, trib.tribonacci(3))
+        assertEquals(4, trib.tribonacci(4))
     }
 }
