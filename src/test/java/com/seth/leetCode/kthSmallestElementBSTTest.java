@@ -2,8 +2,6 @@ package com.seth.leetCode;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class kthSmallestElementBSTTest {
 
     @Test
@@ -15,6 +13,6 @@ class kthSmallestElementBSTTest {
         node.left = node1;
         node1.left = node2;
         node2.left = node3;
-        System.out.println(new kthSmallestElementBST().kthSmallest(node, 3));
+        System.out.println(new KthSmallestElementBST().kthSmallest(node, 3));
     }
 }
