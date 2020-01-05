@@ -3,3 +3,5 @@ QuickMaths.iml
 out/*
 .gradle/*
 build/*
+src/main/java/com/seth/randomequestions
+src/test/java/com/seth/randomequestions
