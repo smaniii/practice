@@ -2,76 +2,86 @@ package com.seth.MikeQuestions;
 
 import com.seth.leetCode.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 public class DeleteNodeBST {
-    //nlogn solution
-    List<Integer> nodeValues = new ArrayList<>();
+    //O(ln) solution in average case o(n) in worst
     public TreeNode deleteNode(TreeNode root, int key) {
-        if(root == null) return null;
-        getValues(root, key);
-        if(nodeValues.isEmpty()) return null;
-        TreeNode head = new TreeNode(nodeValues.get(0));
-        nodeValues.remove(0);
-        makeNewTree(head);
-        return head;
-    }
-
-    private void makeNewTree(TreeNode head) {
-        TreeNode tempHead = head;
-        while (!nodeValues.isEmpty()) {
-            TreeNode nodeToInsert = new TreeNode(nodeValues.get(0));
-            if(tempHead.val > nodeToInsert.val && tempHead.left == null) {
-                tempHead.left = nodeToInsert;
-                tempHead = head;
-                nodeValues.remove(0);
-            }
-            else if(tempHead.val > nodeToInsert.val && tempHead.left != null) {
-                tempHead = tempHead.left;
-            }
-            else if(tempHead.val < nodeToInsert.val && tempHead.right == null) {
-                tempHead.right = nodeToInsert;
-                tempHead = head;
-                nodeValues.remove(0);
-            }
-            else if(tempHead.val < nodeToInsert.val && tempHead.right != null) {
-                tempHead = tempHead.right;
-            }
-        }
-    }
-
-    private void getValues(TreeNode root, int key) {
-        if(root == null) return;
-        if(root.val != key) nodeValues.add(root.val);
-        if(root.left != null) getValues(root.left, key);
-        if(root.right != null) getValues(root.right, key);
-    }
-
-    //logn solution
-    public TreeNode deleteNodeOrderLogN(TreeNode root, int key) {
-        if(root == null) return null;
-        if(root.val == key) {
-            if(root.left == null) root = root.right;
-            else if (root.right == null) root = root.left;
-            else {
-                root.val = getMin(root.right);
-                root.right = deleteNodeOrderLogN(root.right, root.val);
-            }
-        }
-        else if(root.val < key) {
-            root.right = deleteNodeOrderLogN(root.right, key);
-        }
-        else {
-            root.left =  deleteNodeOrderLogN(root.left, key);
-        }
+        TreeNode removedNode = removeNode(root, key);
+        TreeNode createNodeToInsert = createNodeToInsert(removedNode);
+        if (root == null || root.val == key) return createNodeToInsert;
+        insertNode(root, createNodeToInsert);
         return root;
     }
 
-    private int getMin(TreeNode root) {
-        while (root.left != null) {
-            root = root.left;
+    //return the node removed
+    private TreeNode removeNode(TreeNode root, int key) {
+        Queue<TreeNode> pq = new LinkedList<>();
+        if (root == null || root.val == key) return root;
+        pq.add(root);
+        while (!pq.isEmpty()) {
+            TreeNode node = pq.poll();
+            if (node.left != null) {
+                if (node.left.val == key) {
+                    TreeNode temp = node.left;
+                    node.left = null;
+                    return temp;
+                }
+                else {
+                    pq.add(node.left);
+                }
+            }
+            if (node.right != null) {
+                if (node.right.val == key) {
+                    TreeNode temp = node.right;
+                    node.right = null;
+                    return temp;
+                }
+                else {
+                    pq.add(node.right);
+                }
+            }
         }
-        return root.val;
+        return null;
+    }
+
+    //return back node to be inserted from the removed node
+    private TreeNode createNodeToInsert(TreeNode removeNode) {
+        if (removeNode == null || (removeNode.left == null && removeNode.right == null)) return null;
+        else if (removeNode.left != null && removeNode.right == null) return removeNode.left;
+        else if (removeNode.right != null && removeNode.left == null) return removeNode.right;
+        else {
+            TreeNode lowestRightSubTree = removeNode.right;
+            while (lowestRightSubTree.left != null) {
+                lowestRightSubTree = lowestRightSubTree.left;
+            }
+            lowestRightSubTree.left = removeNode.left;
+            return removeNode.right;
+        }
+    }
+
+    //return the root node after inserted node is added
+    private void insertNode(TreeNode root, TreeNode insert) {
+        if (root == null || insert == null) return;
+        else if (insert.val > root.val) {
+            if (root.right == null) {
+                root.right = insert;
+                return;
+            }
+            else {
+                insertNode(root.right, insert);
+            }
+        }
+        else {
+            if (root.left == null) {
+                root.left = insert;
+                return;
+            }
+            else {
+                insertNode(root.left, insert);
+            }
+        }
     }
 }
