@@ -18,6 +18,6 @@ class DeleteNodeBSTTest {
         treeNodeL.left = treeNodeLL;
         treeNode.left = treeNodeL;
         treeNode.right = treeNodeR;
-        System.out.println(deleteNodeBST.deleteNodeOrderLogN(treeNode, 2));
+        System.out.println(deleteNodeBST.deleteNode(treeNode, 2));
     }
 }
