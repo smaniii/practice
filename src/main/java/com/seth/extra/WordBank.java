@@ -1,4 +1,4 @@
-package com.seth.amazon;
+package com.seth.extra;
 
 /*
 You are given a string bank. This bank contains pieces and compounds. Print he pieces that make up compounds in any order. No duplicates.
